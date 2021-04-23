@@ -12,7 +12,8 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
     this.postService.getPosts().subscribe( resp => {
-      console.log(resp);
+
+      console.log(resp.posts[0]);
 
     });
   }
