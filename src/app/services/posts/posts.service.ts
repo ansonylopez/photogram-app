@@ -19,4 +19,8 @@ export class PostsService {
 
     return this.http.get<PostsResponse>(`${URL}/posts/?page=${this.postsPage}`);
   }
+
+  restartPostPage() {
+    this.postsPage = 0;
+  }
 }

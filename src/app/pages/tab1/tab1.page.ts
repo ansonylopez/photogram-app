@@ -10,15 +10,38 @@ import { Post } from '../../interfaces/interfaces';
 export class Tab1Page implements OnInit {
 
   posts: Post[] = [];
+  disabled: boolean = false;
 
   constructor(private postService:PostsService) {}
 
   ngOnInit() {
-    this.postService.getPosts().subscribe( resp => {
+      this.nextPosts();
+  }
 
-      console.log(resp.posts);
+  reload(event) {
+    this.disabled = false;
+    this.posts = [];
+    this.postService.restartPostPage();
+    this.nextPosts(event);
+
+  }
+
+  nextPosts(event?) {
+
+    this.postService.getPosts().subscribe( resp => {
+      console.log(resp);
+
       this.posts.push( ...resp.posts );
+
+      if (event) {
+        event.target.complete();
+      }
+
+      if (!resp.posts.length) {
+        this.disabled = true;
+      }
     });
+
   }
 
 }
