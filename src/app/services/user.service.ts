@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { environment } from 'src/environments/environment';
+import { User } from '../interfaces/interfaces';
 
 const URL = environment.url;
 
@@ -40,6 +41,30 @@ export class UserService {
 
       });
 
+    }
+
+    register( user: User) {
+
+      return new Promise( resolve => {
+
+        this.http.post(`${ URL }/user/create`, user)
+            .subscribe( resp => {
+
+              if (resp['ok']) {
+                this.saveToken(resp['token']);
+                resolve(true);
+                return;
+              }
+
+              this.token = null;
+              this.storage.clear();
+              console.log(resp);
+              resolve(false);
+              return;
+
+            })
+
+      })
     }
 
     async saveToken( token: string) {
