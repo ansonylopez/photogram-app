@@ -14,45 +14,6 @@ export class LoginPage implements OnInit {
 
   @ViewChild('mainSlide', { static: true }) mainSlides: IonSlides;
 
-  avatars = [
-    {
-      img: 'av-1.png',
-      selected: true
-    },
-    {
-      img: 'av-2.png',
-      selected: false
-    },
-    {
-      img: 'av-3.png',
-      selected: false
-    },
-    {
-      img: 'av-4.png',
-      selected: false
-    },
-    {
-      img: 'av-5.png',
-      selected: false
-    },
-    {
-      img: 'av-6.png',
-      selected: false
-    },
-    {
-      img: 'av-7.png',
-      selected: false
-    },
-    {
-      img: 'av-8.png',
-      selected: false
-    },
-];
-
-  avatarSlide = {
-    slidesPerView: 3.5,
-  };
-
   loginUser = {
     email: 'test4@test.com',
     password: '1234'
@@ -105,14 +66,6 @@ export class LoginPage implements OnInit {
     }
 
     this.uiService.presentAlert('El correo electronico ya existe.')
-  }
-
-  selectAvatar( avatar ) {
-
-      this.avatars.forEach( avatar => avatar.selected = false);
-
-      avatar.selected = true;
-
   }
 
   showRegister() {
