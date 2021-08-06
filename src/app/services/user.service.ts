@@ -13,7 +13,7 @@ const URL = environment.url;
 export class UserService {
 
   token: string = null;
-  user: User = {};
+  private user: User = {};
 
   constructor(
     private http: HttpClient,
@@ -70,6 +70,15 @@ export class UserService {
       })
     }
 
+    getUser() {
+
+      if (!this.user._id) {
+        this.validateToken();
+      }
+
+      return {...this.user};
+    }
+
     async saveToken( token: string) {
 
       this.token = token;
@@ -102,6 +111,8 @@ export class UserService {
 
                   if (resp['ok']) {
                     this.user = resp['user'];
+                    console.log('usuario raro', resp['user']);
+
                     resolve(true);
                     return;
                   }
@@ -113,4 +124,32 @@ export class UserService {
       });
 
     }
+
+    updateUser(user: User) {
+
+      const headers = new HttpHeaders({
+        'x-token': this.token
+      });
+
+      return new Promise(resolve => {
+
+        this.http.post(`${ URL }/user/update`, user, { headers })
+          .subscribe( resp => {
+
+            if (resp['ok']) {
+              console.log(resp);
+
+              this.saveToken(resp['userToken']);
+              resolve(true);
+              return;
+            }
+
+            resolve(false);
+          })
+
+      });
+
+
+    }
+
 }
