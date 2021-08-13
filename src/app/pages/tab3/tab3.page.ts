@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { User } from 'src/app/interfaces/interfaces';
 import { UiService } from 'src/app/services/Ui/ui.service';
 import { UserService } from 'src/app/services/user.service';
@@ -27,7 +26,7 @@ export class Tab3Page implements OnInit{
     this.setUser();
   }
 
-  async update( fUpdate: NgForm ) {
+  async update( fUpdate: HTMLFormElement ) {
 
     if (fUpdate.invalid) { return; }
     const updated = await this.userService.updateUser(this.user);
