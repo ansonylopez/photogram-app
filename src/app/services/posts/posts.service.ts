@@ -36,6 +36,7 @@ export class PostsService {
       this.http.post(`${ URL }/posts`, post, { headers })
         .subscribe( resp => {
           this.newPost.emit( resp['post'] );
+          resolve(true);
         })
 
     })
