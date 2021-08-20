@@ -26,7 +26,7 @@ export class UserService {
       const payload = { email, password };
 
       return new Promise( resolve => {
-
+        
         this.http.post(`${ URL }/user/login`, payload).subscribe( response =>  {
 
             if (response['ok']) {
@@ -37,7 +37,6 @@ export class UserService {
 
             this.token = null;
             this.storage.clear();
-            console.log(response);
             resolve(false);
             return;
           })
@@ -61,7 +60,6 @@ export class UserService {
 
               this.token = null;
               this.storage.clear();
-              console.log(resp);
               resolve(false);
               return;
 
@@ -94,7 +92,7 @@ export class UserService {
     async validateToken(): Promise<boolean> {
 
       await this.loadToken();
-
+      
       if (!this.token) {
         this.navCtrl.navigateRoot('/login');
         return Promise.resolve(false);
@@ -111,16 +109,13 @@ export class UserService {
 
                   if (resp['ok']) {
                     this.user = resp['user'];
-                    console.log('usuario raro', resp['user']);
 
                     resolve(true);
                     return;
                   }
                   this.navCtrl.navigateRoot('/login');
                   resolve(false);
-
                 })
-
       });
 
     }
@@ -137,13 +132,11 @@ export class UserService {
           .subscribe( resp => {
 
             if (resp['ok']) {
-              console.log(resp);
 
               this.saveToken(resp['userToken']);
               resolve(true);
               return;
             }
-
             resolve(false);
           })
 
