@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/interfaces';
 import { UiService } from 'src/app/services/Ui/ui.service';
 import { UserService } from 'src/app/services/user.service';
+import { PostsService } from '../../services/posts/posts.service';
 
 @Component({
   selector: 'app-tab3',
@@ -14,7 +15,8 @@ export class Tab3Page implements OnInit{
 
   constructor(
     private userService: UserService,
-    private uiService: UiService
+    private uiService: UiService,
+    private postService: PostsService
   ) {}
 
   ngOnInit() {
@@ -44,7 +46,8 @@ export class Tab3Page implements OnInit{
   }
 
   logout() {
-    console.log('logout');
+    this.postService.restartPostPage();
+    this.userService.logout();
 
   }
 

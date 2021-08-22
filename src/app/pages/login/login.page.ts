@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
     const loginSuccess = await this.userService.login(this.loginUser.email, this.loginUser.password);
 
     if (loginSuccess) {
-      this.navCtrl.navigateRoot('/main/tabs/tab1', { animated: true});
+      this.navCtrl.navigateRoot('/main/tabs/tab1', { animated: true });
       return;
     }
 
@@ -61,6 +61,7 @@ export class LoginPage implements OnInit {
     const valid = await this.userService.register( this.registerUser )
 
     if (valid) {
+      
       this.navCtrl.navigateRoot('/main/tabs/tab1', { animated: true });
       return;
     }

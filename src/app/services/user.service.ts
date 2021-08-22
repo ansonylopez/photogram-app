@@ -27,10 +27,10 @@ export class UserService {
 
       return new Promise( resolve => {
         
-        this.http.post(`${ URL }/user/login`, payload).subscribe( response =>  {
+        this.http.post(`${ URL }/user/login`, payload).subscribe( async response =>  {
 
             if (response['ok']) {
-              this.saveToken(response['token']);
+              await this.saveToken(response['token']);
               resolve(true);
               return;
             }
@@ -42,6 +42,14 @@ export class UserService {
           })
 
       });
+    }
+
+    logout() {
+
+      this.token = null;
+      this.user = null;
+      this.storage.clear();
+      this.navCtrl.navigateRoot('/login', { animated: true });
 
     }
 
@@ -50,10 +58,10 @@ export class UserService {
       return new Promise( resolve => {
 
         this.http.post(`${ URL }/user/create`, user)
-            .subscribe( resp => {
-
+            .subscribe( async resp => {
+              
               if (resp['ok']) {
-                this.saveToken(resp['token']);
+                await this.saveToken(resp['userToken']);
                 resolve(true);
                 return;
               }
@@ -81,6 +89,8 @@ export class UserService {
 
       this.token = token;
       await this.storage.set('token', token);
+
+      await this.validateToken(); 
     }
 
     async loadToken() {
@@ -106,7 +116,8 @@ export class UserService {
 
         this.http.get(`${ URL }/user/`, { headers })
                 .subscribe( resp => {
-
+                  console.log('respuesta validateToken', resp);
+                  
                   if (resp['ok']) {
                     this.user = resp['user'];
 
